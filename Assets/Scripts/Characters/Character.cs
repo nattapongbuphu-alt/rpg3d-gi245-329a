@@ -19,6 +19,10 @@ public abstract class Character : MonoBehaviour
     public Animator Anim { get { return anim; } }
 
     [SerializeField]
+    protected GameObject ringSelection;
+    public GameObject RingSelection { get { return ringSelection; } }
+
+    [SerializeField]
     protected CharState state;
 
     public CharState State { get { return state; } }
@@ -73,6 +77,11 @@ public abstract class Character : MonoBehaviour
         {
             SetState(CharState.Idle);
         }
+    }
+
+    public void ToggleRingSelection(bool flag)
+    {
+        ringSelection.SetActive(flag);
     }
 
 }
