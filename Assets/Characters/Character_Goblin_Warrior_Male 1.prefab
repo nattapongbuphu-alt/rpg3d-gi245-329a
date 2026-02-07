@@ -467,6 +467,7 @@ GameObject:
   - component: {fileID: -487725312852603627}
   - component: {fileID: 7683195822787750310}
   - component: {fileID: -5671633598638270220}
+  - component: {fileID: 7230280142345605054}
   m_Layer: 6
   m_Name: Character_Goblin_Warrior_Male 1
   m_TagString: Untagged
@@ -553,6 +554,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d963b261d2bcf164a9cd2c6a8907e2b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  curHP: 10
+  curCharTarget: {fileID: 0}
+  attackRange: 2
+  attackDamage: 3
+  attackCoolDown: 2
+  attackTimer: 0
+  findingRange: 20
   ringSelection: {fileID: 3657685382219197747}
   state: 0
 --- !u!195 &7683195822787750310
@@ -600,6 +608,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &7230280142345605054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b44b0428f080ae4296c8a4775ae067d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackAI
+  curEnemy: {fileID: 0}
 --- !u!1 &114958
 GameObject:
   m_ObjectHideFlags: 0
@@ -5071,7 +5092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1395173448037697159, guid: c2529d1c776a93a4dbd74195ecb83775, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1982981581238385297, guid: c2529d1c776a93a4dbd74195ecb83775, type: 3}
       propertyPath: m_LocalScale.x

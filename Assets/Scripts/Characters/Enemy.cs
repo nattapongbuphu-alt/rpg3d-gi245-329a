@@ -1,5 +1,7 @@
 using UnityEngine;
 
+
+
 public class Enemy : Character
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -16,6 +18,14 @@ public class Enemy : Character
             case CharState.Walk:
                 WalkUpdate(); 
                 break;
+            case CharState.WalkToEnemy:
+                WalkToEnemyUpdate();
+                break;
+            case CharState.Attack:
+                AttackUpdate();
+                break;
         }
     }
+
+    
 }
