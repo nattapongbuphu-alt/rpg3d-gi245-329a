@@ -8,6 +8,11 @@ public class LeftClick : MonoBehaviour
     [SerializeField]
     private LayerMask layerMask;
 
+    [SerializeField]
+    private RectTransform boxSelection;
+    private Vector2 oldAnchoredPos;
+    private Vector2 startPos;
+
     public static LeftClick instance;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -16,6 +21,8 @@ public class LeftClick : MonoBehaviour
         instance = this;
         cam = Camera.main;
         layerMask = LayerMask.GetMask("Ground", "Character", "Building", "Item");
+
+        boxSelection = UIManager.instance.SelectionBox;
     }
 
     // Update is called once per frame
