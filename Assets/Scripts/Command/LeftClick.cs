@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class LeftClick : MonoBehaviour
 {
+    
+
     private Camera cam;
 
     [SerializeField]
@@ -30,11 +33,25 @@ public class LeftClick : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            ClearRingSelection();
+            startPos =Input.mousePosition;
+
+            if (EventSystems.current.IsPointerOverGameObiect())
+            return;
+            
+            ClearEverything();
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            if (EventSystems.current.IsPointerOverGameObiect())
+            return;
+
+            UpdateSelectionBox(Input.mousePosition);
         }
 
         if (Input.GetMouseButtonUp(0))
         {
+            ReleaseSelectionBox(Input.mousePosition);
             TrySelect(Input.mousePosition);
         }
     }
@@ -63,7 +80,7 @@ public class LeftClick : MonoBehaviour
                     break;
             }
         }
-
+        
     }
 
     private void ClearRingSelection()
@@ -77,5 +94,49 @@ public class LeftClick : MonoBehaviour
         ClearRingSelection();
         PartyManager.instance.SelectChars.Clear();
     }
+
+    private void UpdateSelectionBox(Vector2 mousePos)
+    {
+        if (!boxSelection.gameObject.activeInHierarchy)
+            boxSelection.gameObject.SetActive(true);
+
+        float width = mousePos.x - startPos.x;
+        float height = mousePos.y - startPos.y;
+
+        boxSelection.anchoredPosition = startPos + new Vector2(width / 2, height / 2);
+
+        width = Mathf.Abs(width);
+        height = Mathf.Abs(height);
+
+        boxSelection.sizeDelta = new Vector2(width, height);
+
+        oldAnchoredPos = boxSelection.anchoredPosition;
+    }
+
+    private void ReleaseSelectionBox(Vector2 mousePos)
+    {
+
+        Vector2 conner1;
+        Vector2 conner2;
+
+        boxSelection.gameObject.SetActive(false);
+
+        conner1 = oldAnchoredPos - (boxSelection.sizeDelta / 2);
+        conner2 = oldAnchoredPos + (boxSelection.sizeDelta / 2);
+
+        foreach (Character member in PartyManager.instance.Member)
+        {
+            Vector2 unitPos = cam.WorldToScreenPoint(member.transform.position);
+
+            if ((unitPos.x > conner1.x && unitPos.x < conner2.x)
+            && (unitPos.y > conner1.y && unitPos.y < conner2.y))
+            {
+                PartyManager.instance.SelectChars.Add(member);
+                member.ToggleRingSelection(true);
+            }
+        }
+        boxSelection.sizeDelta = new Vector2(0, 0);
+    }
+
 }
 
