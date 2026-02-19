@@ -35,7 +35,7 @@ public class LeftClick : MonoBehaviour
         {
             startPos =Input.mousePosition;
 
-            if (EventSystems.current.IsPointerOverGameObiect())
+            if (EventSystem.current.IsPointerOverGameObject())
             return;
             
             ClearEverything();
@@ -43,7 +43,7 @@ public class LeftClick : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            if (EventSystems.current.IsPointerOverGameObiect())
+            if (EventSystem.current.IsPointerOverGameObject())
             return;
 
             UpdateSelectionBox(Input.mousePosition);
@@ -124,7 +124,7 @@ public class LeftClick : MonoBehaviour
         conner1 = oldAnchoredPos - (boxSelection.sizeDelta / 2);
         conner2 = oldAnchoredPos + (boxSelection.sizeDelta / 2);
 
-        foreach (Character member in PartyManager.instance.Member)
+        foreach (Character member in PartyManager.instance.Members)
         {
             Vector2 unitPos = cam.WorldToScreenPoint(member.transform.position);
 
