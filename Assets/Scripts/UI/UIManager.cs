@@ -1,10 +1,14 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
     private RectTransform selectionBox;
     public RectTransform SelectionBox { get { return selectionBox; } }
+
+    [SerializeField]
+    private Toggle togglePauseUnpause;
 
     public static UIManager instance;
 
@@ -17,7 +21,8 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.Space))
+            togglePauseUnpause.isOn = !togglePauseUnpause.isOn;
     }
 
     public void ToggleAI(bool isOn)
@@ -32,5 +37,24 @@ public class UIManager : MonoBehaviour
             }
         }
 
+    }
+
+    public void SelectAll()
+    {
+        PartyManager.instance.SelectChars.Clear();
+
+        foreach (Character member in PartyManager.instance.Members)
+            {
+            if(member.CurHP > 0)
+            {
+                member.ToggleRingSelection(true);
+                PartyManager.instance.SelectChars.Add(member);
+            }
+        }
+    }
+
+    public void PauseUnpause (bool isOn)
+    {
+        Time.timeScale = isOn ? 1 : 0;
     }
 }
